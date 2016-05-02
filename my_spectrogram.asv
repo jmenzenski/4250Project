@@ -1,9 +1,4 @@
-function [S_one_sided,F,T,fundamental] = my_spectrogram(x,percent_overlap,nff,threshold,fs,max_frequency)
-
-%-----------------------
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SPECTROGRAMS
-%--------------------------------------------
+function [S,F,T] = my_spectrogram(x,percent_overlap,nff,threshold,fs,max_frequency)
 
 %STFT parameters
 
@@ -25,20 +20,16 @@ figtitle1 = 'Specrogram of a song file';
 figure('name',figtitle1)
 %---------------------------------------------
 
-F_max = find(F <= max_frequency*2);
-F = F(1:F_max(end));
-
 t_epsilon=0.00001;
 S_one_sided=max(S(1:fix(length(F)/2),:),t_epsilon); %keep only the positive frequency
 
-pcolor(T,F(1:fix(length(F)/2)),10*log10(abs(S_one_sided))); 
+pcolor(T,F(1:fix(Nf/2)),10*log10(abs(S_one_sided))); 
 shading interp;
-
 colormap('jet');
 title('Spectrogram: Original');
 xlabel('Time (s)');
 ylabel('Frequency (Hz)');
-
-fundamental = fundamental_finder(S_one_sided, F);
-
 end
+
+
+
